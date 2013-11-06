@@ -1,0 +1,5 @@
+# $Id$
+Subsystem backup /usr/local/sbin/backup-subsystem.sh
+Match user backup 
+   ForceCommand /usr/local/sbin/backup-subsystem.sh
+   AllowTcpForwarding no

@@ -1,0 +1,29 @@
+#!/bin/ksh
+# $Id$
+# Echothrust OpenSSH Backup Subsystem Installer
+# 
+#
+BUID=9000
+echo "Creating user backup uid=${BUID}"
+useradd -c "BACKUP USER" -m -g=uid -p '*************' -s /bin/ksh -u ${BUID} etsbackup
+
+echo "Activating sudo for user backup"
+echo 'etsbackup  ALL=(ALL) NOPASSWD: SETENV: ALL' >>/etc/sudoers
+
+echo "Activating backup user keys"
+echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC02uKYPc1YvxZA/iyYaK8G6HBiiA91SB62plPlVAqpwxRPKwPaY21ExDN2q3ezHppuPxuioFoK6L4ZL4Mv/YJmKUSp1fwSsUGEcP8dlPSjDRvDORSdhFzXBFcINH9apFp/SjnvB81F24GTx+YoCRhEtEA0bx3Uc3u7eL14amlxSZ21i7RsPUBYRbaIWPHskaU/RP3TzPNdkETrcnjb4qbry1hCumznBIzchiCBhXN5/3bnRrnqKfewAO073B2TtqS+1Val3ysJPeziCRBWsBkjKJkwm0sAVsFbO8+gI/keCxfmXhIseUUUutKxE+XZybR9xf0C0RmHRFk1QRDuQB+L backup@echothrust' >/home/etsbackup/.ssh/authorized_keys
+
+echo "Installing subsystem into /usr/local/sbin"
+install -o 0 -g 0 backup-subsystem.sh /usr/local/sbin/backup-subsystem.sh
+
+echo "Installing configuration files"
+install -o etsbackup -g etsbackup -d /etc/ETS-backup
+cp ETS-backup/* /etc/ET-backup
+chown -R etsbackup.etsbackup /etc/ETS-backup
+
+echo "Configuring SSH"
+echo "">>/etc/ssh/sshd_config
+cat contrib/sshd_config >>/etc/ssh/sshd_config
+
+echo "Attempting restart of sshd"
+kill -HUP $(cat /var/run/sshd.pid)

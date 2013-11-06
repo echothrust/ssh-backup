@@ -1,0 +1,6 @@
+/var/cron
+/var/mysql
+/etc
+/home
+/root
+/var/www
