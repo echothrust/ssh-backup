@@ -14,7 +14,7 @@ Match user backup
    AllowTcpForwarding no
 ```
 
-After installing the subsystem on your hosts, simply create a user `etsbackup` on your central backup server, add the private ssh key to `~etsbackup/.ssh/id_rsa`, and configure the server to receive backups on-demand using jobs like the following:
+After installing the subsystem on your hosts, simply create a user `etsbackup` on your central backup server, copy the private ssh keyfile to `~etsbackup/.ssh/id_rsa`, and configure the server to receive backups on-demand using jobs like the following:
 
 ```
 #!/bin/ksh
