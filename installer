@@ -18,7 +18,7 @@ install -o 0 -g 0 backup-subsystem.sh /usr/local/sbin/backup-subsystem.sh
 
 echo "Installing configuration files"
 install -o etsbackup -g etsbackup -d /etc/ETS-backup
-cp ETS-backup/* /etc/ET-backup
+cp ETS-backup/* /etc/ETS-backup
 chown -R etsbackup.etsbackup /etc/ETS-backup
 
 echo "Configuring SSH"
